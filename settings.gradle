@@ -1,0 +1,3 @@
+include ':yoonit-facefy'
+include ':app'
+rootProject.name = "facefydemo"
