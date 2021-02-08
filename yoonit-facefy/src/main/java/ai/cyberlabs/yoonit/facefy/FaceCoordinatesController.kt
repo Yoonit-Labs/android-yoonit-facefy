@@ -4,7 +4,7 @@ import ai.cyberlabs.yoonit.facefy.utils.resize
 import com.google.mlkit.vision.face.Face
 import kotlin.math.max
 
-class FaceCoordinatesController {
+internal class FaceCoordinatesController {
 
     /**
      * Get closest face.
