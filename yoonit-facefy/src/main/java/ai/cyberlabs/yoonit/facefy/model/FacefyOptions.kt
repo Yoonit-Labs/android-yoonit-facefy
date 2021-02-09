@@ -2,9 +2,9 @@ package ai.cyberlabs.yoonit.facefy.model
 
 object FacefyOptions {
 
-    var faceClassification: Boolean = true
+    var classification: Boolean = true
 
-    var faceContours: Boolean = true
+    var contours: Boolean = true
 
-    var faceBoundingBox: Boolean = true
+    var boundingBox: Boolean = true
 }

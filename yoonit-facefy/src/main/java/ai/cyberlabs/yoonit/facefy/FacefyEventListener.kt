@@ -1,15 +1,19 @@
 package ai.cyberlabs.yoonit.facefy
 
 import android.graphics.PointF
-import android.graphics.Rect
 
 interface FacefyEventListener {
 
-    fun onEyesDetected(leftEyeOpenProbability: Float, rightEyeOpenProbability: Float)
+    fun onFaceAnalysis(
+        leftEyeOpenProbability: Float?,
+        rightEyeOpenProbability: Float?,
+        smilingProbability: Float?,
+        headEulerAngleX: Float,
+        headEulerAngleY: Float,
+        headEulerAngleZ: Float
+    )
 
-    fun onSmileDetected(smilingProbability: Float)
+    fun onContours(faceContours: MutableList<PointF>)
 
-    fun onContoursDetected(faceContours: MutableList<PointF>)
-
-    fun onFaceDetected(boundingBox: Rect)
+    fun onFace(x: Int, y: Int, width: Int, height: Int)
 }

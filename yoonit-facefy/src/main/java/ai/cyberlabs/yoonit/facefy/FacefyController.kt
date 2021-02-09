@@ -7,7 +7,7 @@ import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 
-class FacefyController(private var facefyEventListener: FacefyEventListener) {
+internal class FacefyController(private var facefyEventListener: FacefyEventListener) {
 
     /**
      * Responsible to manipulate everything related with the face coordinates.
@@ -34,22 +34,19 @@ class FacefyController(private var facefyEventListener: FacefyEventListener) {
                     val closestFace: Face? = this.faceCoordinatesController.getClosestFace(faces)
 
                     closestFace?.let { face ->
-                        if (FacefyOptions.faceClassification) {
-                            face.smilingProbability?.let { smilingProbability ->
-                                facefyEventListener.onSmileDetected(smilingProbability)
-                            }
 
-                            face.leftEyeOpenProbability?.let { leftEyeOpenProbability ->
-                                face.rightEyeOpenProbability?.let { rightEyeOpenProbability ->
-                                    facefyEventListener.onEyesDetected(
-                                            leftEyeOpenProbability,
-                                            rightEyeOpenProbability
-                                    )
-                                }
-                            }
+                        if (FacefyOptions.classification) {
+                            facefyEventListener.onFaceAnalysis(
+                                face.leftEyeOpenProbability,
+                                face.rightEyeOpenProbability,
+                                face.smilingProbability,
+                                face.headEulerAngleX,
+                                face.headEulerAngleY,
+                                face.headEulerAngleZ
+                            )
                         }
 
-                        if (FacefyOptions.faceContours) {
+                        if (FacefyOptions.contours) {
                             val faceContours = mutableListOf<PointF>()
 
                             face.allContours.forEach {faceContour ->
@@ -57,11 +54,16 @@ class FacefyController(private var facefyEventListener: FacefyEventListener) {
                                     faceContours.add(pointF)
                                 }
                             }
-                            facefyEventListener.onContoursDetected(faceContours)
+                            facefyEventListener.onContours(faceContours)
                         }
 
-                        if (FacefyOptions.faceBoundingBox) {
-                            facefyEventListener.onFaceDetected(face.boundingBox)
+                        if (FacefyOptions.boundingBox) {
+                            facefyEventListener.onFace(
+                                face.boundingBox.left,
+                                face.boundingBox.top,
+                                face.boundingBox.width(),
+                                face.boundingBox.height()
+                            )
                         }
                     }
             }
