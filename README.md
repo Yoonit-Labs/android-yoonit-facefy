@@ -44,3 +44,13 @@ Landmarks are points of interest within a face regarding the Euler Angle Y
 #### Contours
 
 Contours is a list of Points that represents the shape of the recognized face       
+
+## To contribute and make it better
+
+Clone the repo, change what you want and send PR.
+
+Contributions are always welcome!
+
+---
+
+Code with ❤ by the [**Cyberlabs AI**](https://cyberlabs.ai/) Front-End Team
