@@ -41,6 +41,6 @@ Landmarks are points of interest within a face regarding the Euler Angle Y
 | 12 degrees to 36 degrees          | right mouth, nose base, bottom mouth, left eye, right eye, right cheek, right ear tip             
 | > 36 degrees                      | right eye, right mouth, right ear, nose base, right cheek       
 
-#### Landmarks
+#### Contours
 
 Contours is a list of Points that represents the shape of the recognized face       
