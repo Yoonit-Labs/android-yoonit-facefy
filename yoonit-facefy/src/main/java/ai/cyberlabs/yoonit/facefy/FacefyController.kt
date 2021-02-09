@@ -35,7 +35,7 @@ internal class FacefyController(private var facefyEventListener: FacefyEventList
 
                     closestFace?.let { face ->
 
-                        if (FacefyOptions.faceClassification) {
+                        if (FacefyOptions.classification) {
                             facefyEventListener.onFaceAnalysis(
                                 face.leftEyeOpenProbability,
                                 face.rightEyeOpenProbability,
@@ -46,7 +46,7 @@ internal class FacefyController(private var facefyEventListener: FacefyEventList
                             )
                         }
 
-                        if (FacefyOptions.faceContours) {
+                        if (FacefyOptions.contours) {
                             val faceContours = mutableListOf<PointF>()
 
                             face.allContours.forEach {faceContour ->
@@ -57,7 +57,7 @@ internal class FacefyController(private var facefyEventListener: FacefyEventList
                             facefyEventListener.onContours(faceContours)
                         }
 
-                        if (FacefyOptions.faceBoundingBox) {
+                        if (FacefyOptions.boundingBox) {
                             facefyEventListener.onFace(
                                 face.boundingBox.left,
                                 face.boundingBox.top,
