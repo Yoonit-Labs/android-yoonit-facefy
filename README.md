@@ -21,9 +21,8 @@ A Android library to provide:
 
 ### Events
 
-| Event                | Parameters                                                                   | Description
-| -                    | -                                                                            | -
-| onEyesDetected       | `leftEyeOpenProbability: Float, rightEyeOpenProbability: Float`              | Must have started detect (see `detect`). Emit the detected eyes open probability
-| onSmileDetected      | `smilingProbability: Float`                                                  | Must have started detect. Emit the detected smiling probability.
-| onContoursDetected   | `faceContours: MutableList<PointF>`                                          | Must have started detect. Emit the detected contours.
-| onFaceDetected       | `boundingBox: Rect`                                                          | Must have started detect. Emit the detected face bounding box.
+| Event              | Parameters                                                                                                                                                          | Description
+| -                  | -                                                                                                                                                                   | -
+| onFaceAnalysis     | `leftEyeOpenProbability: Float, rightEyeOpenProbability: Float, smilingProbability: Float, headEulerAngleX: Float, headEulerAngleY: Float, headEulerAngleZ: Float`  | Must have started detect (see `detect`). Emit the detected eyes open probability
+| onContours         | `faceContours: MutableList<PointF>`                                                                                                                                 | Must have started detect. Emit the detected contours.
+| onFace             | `x: Int, y: Int, width: Int, height: Int`                                                                                                                           | Must have started detect. Emit the detected face bounding box.
