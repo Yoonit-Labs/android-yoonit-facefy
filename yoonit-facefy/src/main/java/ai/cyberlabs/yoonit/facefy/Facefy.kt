@@ -1,11 +1,13 @@
 package ai.cyberlabs.yoonit.facefy
 
+import ai.cyberlabs.yoonit.facefy.model.FaceDetected
 import ai.cyberlabs.yoonit.facefy.model.FacefyOptions
 import com.google.mlkit.vision.common.InputImage
+import java.lang.Exception
 
-class Facefy(facefyEventListener: FacefyEventListener) {
+class Facefy {
 
-    private val facefyController = FacefyController(facefyEventListener)
+    private val facefyController = FacefyController()
 
     var classification: Boolean = FacefyOptions.classification
         set(value) {
@@ -25,5 +27,7 @@ class Facefy(facefyEventListener: FacefyEventListener) {
             field = value
         }
 
-    fun detect(image: InputImage) = facefyController.detect(image)
+    fun detect(image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onFaceUndetected: (Exception) -> Unit) {
+        facefyController.detect(image, onFaceDetected, onFaceUndetected)
+    }
 }

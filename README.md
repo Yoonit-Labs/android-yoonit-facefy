@@ -12,24 +12,14 @@ A Android library to provide:
 
 ### Methods
 
-| Function                     | Parameters                                      | Valid values                  | Return Type | Description
-| -                            | -                                               | -                             | -           | -
-| detect                       | `image: InputImage`                             | -                             | void        | Start face detection from from image
-| setFaceClassification        | `enabled: Boolean`                              | -                             | void        | Set face classification enabled/disabled.
-| setFaceContours              | `enabled: Boolean`                              | -                             | void        | Set face contours detection enabled/disabled.
-| setFaceBoundingBox           | `enabled: Boolean`                              | -                             | void        | Set face bounding box detection enabled/disabled.
+| Function                     | Parameters                                                  | Valid values  | Return Type | Description
+| -                            | -                                                           | -             | -           | -
+| detect                       | `image: InputImage, onFaceDetected: (DetectedFace) -> Unit` | -             | void        | Start face detection from from image
+| setFaceClassification        | `enabled: Boolean`                                          | -             | void        | Set face classification enabled/disabled.
+| setFaceContours              | `enabled: Boolean`                                          | -             | void        | Set face contours detection enabled/disabled.
+| setFaceBoundingBox           | `enabled: Boolean`                                          | -             | void        | Set face bounding box detection enabled/disabled.                                                                                                                      | Must have started detect. Emit the detected face bounding box.
 
-### Events
-
-| Event              | Parameters                                                                                                                                                          | Description
-| -                  | -                                                                                                                                                                   | -
-| onFaceAnalysis     | `leftEyeOpenProbability: Float, rightEyeOpenProbability: Float, smilingProbability: Float, headEulerAngleX: Float, headEulerAngleY: Float, headEulerAngleZ: Float`  | Must have started detect (see `detect`). Emit the detected eyes open probability
-| onContours         | `faceContours: MutableList<PointF>`                                                                                                                                 | Must have started detect. Emit the detected contours.
-| onFace             | `x: Int, y: Int, width: Int, height: Int`                                                                                                                           | Must have started detect. Emit the detected face bounding box.
-
-### Events Note
-
-#### Landmarks
+#### Euler Angle Y Detectable Landmarks
 
 Landmarks are points of interest within a face regarding the Euler Angle Y 
 

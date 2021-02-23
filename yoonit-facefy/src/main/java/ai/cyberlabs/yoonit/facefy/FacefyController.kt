@@ -1,13 +1,15 @@
 package ai.cyberlabs.yoonit.facefy
 
+import ai.cyberlabs.yoonit.facefy.model.FaceDetected
 import ai.cyberlabs.yoonit.facefy.model.FacefyOptions
 import android.graphics.PointF
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import java.lang.Exception
 
-internal class FacefyController(private var facefyEventListener: FacefyEventListener) {
+internal class FacefyController {
 
     /**
      * Responsible to manipulate everything related with the face coordinates.
@@ -23,7 +25,11 @@ internal class FacefyController(private var facefyEventListener: FacefyEventList
 
     private val detector = FaceDetection.getClient(faceDetectorOptions)
 
-    fun detect(inputImage: InputImage) {
+    fun detect(
+        inputImage: InputImage,
+        onFaceDetected: (FaceDetected) -> Unit,
+        onFaceUndetected: (Exception) -> Unit
+    ) {
         this.detector
                 .process(inputImage)
                 .addOnSuccessListener { faces ->
@@ -35,37 +41,40 @@ internal class FacefyController(private var facefyEventListener: FacefyEventList
 
                     closestFace?.let { face ->
 
+                        val faceContours = mutableListOf<PointF>()
+                        var leftEyeOpenProbability: Float? = null
+                        var rightEyeOpenProbability: Float? = null
+                        var smilingProbability: Float? = null
+
                         if (FacefyOptions.classification) {
-                            facefyEventListener.onFaceAnalysis(
-                                face.leftEyeOpenProbability,
-                                face.rightEyeOpenProbability,
-                                face.smilingProbability,
-                                face.headEulerAngleX,
-                                face.headEulerAngleY,
-                                face.headEulerAngleZ
-                            )
+                            leftEyeOpenProbability = face.leftEyeOpenProbability
+                            rightEyeOpenProbability = face.rightEyeOpenProbability
+                            smilingProbability = face.smilingProbability
                         }
 
                         if (FacefyOptions.contours) {
-                            val faceContours = mutableListOf<PointF>()
-
                             face.allContours.forEach {faceContour ->
                                 faceContour.points.forEach { pointF ->
                                     faceContours.add(pointF)
                                 }
                             }
-                            facefyEventListener.onContours(faceContours)
                         }
 
-                        if (FacefyOptions.boundingBox) {
-                            facefyEventListener.onFace(
-                                face.boundingBox.left,
-                                face.boundingBox.top,
-                                face.boundingBox.width(),
-                                face.boundingBox.height()
+                        onFaceDetected(
+                            FaceDetected(
+                                leftEyeOpenProbability,
+                                rightEyeOpenProbability,
+                                smilingProbability,
+                                face.headEulerAngleX,
+                                face.headEulerAngleY,
+                                face.headEulerAngleZ,
+                                faceContours,
+                                face.boundingBox
                             )
-                        }
+                        )
                     }
             }
+            .addOnFailureListener { e -> onFaceUndetected(e) }
+            .addOnCompleteListener { detector.close() }
     }
 }
