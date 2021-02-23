@@ -1,8 +1,9 @@
 package ai.cyberlabs.yoonit.facefy
 
-import ai.cyberlabs.yoonit.facefy.model.DetectedFace
+import ai.cyberlabs.yoonit.facefy.model.FaceDetected
 import ai.cyberlabs.yoonit.facefy.model.FacefyOptions
 import com.google.mlkit.vision.common.InputImage
+import java.lang.Exception
 
 class Facefy {
 
@@ -26,5 +27,7 @@ class Facefy {
             field = value
         }
 
-    fun detect(image: InputImage, onFaceDetected: (DetectedFace) -> Unit) = facefyController.detect(image, onFaceDetected)
+    fun detect(image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onFaceUndetected: (Exception) -> Unit) {
+        facefyController.detect(image, onFaceDetected, onFaceUndetected)
+    }
 }

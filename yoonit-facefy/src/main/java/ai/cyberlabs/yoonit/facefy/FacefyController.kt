@@ -1,12 +1,13 @@
 package ai.cyberlabs.yoonit.facefy
 
-import ai.cyberlabs.yoonit.facefy.model.DetectedFace
+import ai.cyberlabs.yoonit.facefy.model.FaceDetected
 import ai.cyberlabs.yoonit.facefy.model.FacefyOptions
 import android.graphics.PointF
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import java.lang.Exception
 
 internal class FacefyController {
 
@@ -26,7 +27,8 @@ internal class FacefyController {
 
     fun detect(
         inputImage: InputImage,
-        onFaceDetected: (DetectedFace) -> Unit
+        onFaceDetected: (FaceDetected) -> Unit,
+        onFaceUndetected: (Exception) -> Unit
     ) {
         this.detector
                 .process(inputImage)
@@ -43,10 +45,6 @@ internal class FacefyController {
                         var leftEyeOpenProbability: Float? = null
                         var rightEyeOpenProbability: Float? = null
                         var smilingProbability: Float? = null
-                        var boundingBoxLeft = 0
-                        var boundingBoxTop = 0
-                        var boundingBoxWidth = 0
-                        var boundingBoxHeight = 0
 
                         if (FacefyOptions.classification) {
                             leftEyeOpenProbability = face.leftEyeOpenProbability
@@ -62,15 +60,8 @@ internal class FacefyController {
                             }
                         }
 
-                        if (FacefyOptions.classification) {
-                            boundingBoxLeft = face.boundingBox.left
-                            boundingBoxTop = face.boundingBox.top
-                            boundingBoxWidth = face.boundingBox.width()
-                            boundingBoxHeight = face.boundingBox.height()
-                        }
-
                         onFaceDetected(
-                            DetectedFace(
+                            FaceDetected(
                                 leftEyeOpenProbability,
                                 rightEyeOpenProbability,
                                 smilingProbability,
@@ -78,16 +69,12 @@ internal class FacefyController {
                                 face.headEulerAngleY,
                                 face.headEulerAngleZ,
                                 faceContours,
-                                boundingBoxLeft,
-                                boundingBoxTop,
-                                boundingBoxWidth,
-                                boundingBoxHeight,
-                                inputImage.width,
-                                inputImage.height
+                                face.boundingBox
                             )
                         )
                     }
             }
+            .addOnFailureListener { e -> onFaceUndetected(e) }
             .addOnCompleteListener { detector.close() }
     }
 }
