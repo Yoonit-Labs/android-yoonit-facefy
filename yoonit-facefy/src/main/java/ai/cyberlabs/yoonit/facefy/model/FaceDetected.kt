@@ -12,5 +12,5 @@ data class FaceDetected(
     var headEulerAngleZ: Float,
     var contours: MutableList<PointF> = mutableListOf(),
     var boundingBox: Rect,
-    var roi: Rect
+    var roiRect: Rect
 )

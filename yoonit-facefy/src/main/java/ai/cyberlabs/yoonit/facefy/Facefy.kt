@@ -27,33 +27,33 @@ class Facefy {
             field = value
         }
 
-    var roiEnable: Boolean = FacefyOptions.faceROI.enable
+    var roiEnable: Boolean = FacefyOptions.roi.enable
         set(value) {
-            FacefyOptions.faceROI.enable = value
+            FacefyOptions.roi.enable = value
             field = value
         }
 
-    var roiRect: RectF = FacefyOptions.faceROI.rectOffset
+    var roiRect: RectF = FacefyOptions.roi.rectOffset
         set(value) {
-            FacefyOptions.faceROI.rectOffset = value
+            FacefyOptions.roi.rectOffset = value
             field = value
         }
 
-    var roiDetectMinSize: Float = FacefyOptions.faceROI.minimumSize
+    var roiDetectMinSize: Float = FacefyOptions.roi.minimumSize
         set(value) {
-            FacefyOptions.faceROI.minimumSize = value
+            FacefyOptions.roi.minimumSize = value
             field = value
         }
 
-    var detectMinSize: Float = FacefyOptions.faceCaptureMinSize
+    var detectMinSize: Float = FacefyOptions.detectMinSize
         set(value) {
-            FacefyOptions.faceCaptureMinSize = value
+            FacefyOptions.detectMinSize = value
             field = value
         }
 
-    var detectMaxSize: Float = FacefyOptions.faceCaptureMaxSize
+    var detectMaxSize: Float = FacefyOptions.detectMaxSize
         set(value) {
-            FacefyOptions.faceCaptureMaxSize = value
+            FacefyOptions.detectMaxSize = value
             field = value
         }
 

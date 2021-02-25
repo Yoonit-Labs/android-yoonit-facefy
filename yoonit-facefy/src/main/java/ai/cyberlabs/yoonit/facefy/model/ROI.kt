@@ -1,12 +1,11 @@
 package ai.cyberlabs.yoonit.facefy.model
 
-import android.graphics.Color
 import android.graphics.RectF
 
 /**
  * Model to set face region of interest.
  */
-class FaceROI {
+class ROI {
     // Enable or disable ROI.
     var enable: Boolean = false
 
