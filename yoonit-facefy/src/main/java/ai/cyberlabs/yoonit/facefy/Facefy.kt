@@ -27,7 +27,7 @@ class Facefy {
             field = value
         }
 
-    fun detect(image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onFaceUndetected: (Exception) -> Unit) {
-        facefyController.detect(image, onFaceDetected, onFaceUndetected)
+    fun detect(image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit) {
+        facefyController.detect(image, onFaceDetected, onMessage)
     }
 }

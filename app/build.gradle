@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -23,6 +25,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        dataBinding true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,9 +40,19 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation project(path: ":yoonit-facefy")
+
+    implementation "androidx.core:core-ktx:$ktx_version"
+
+    kapt 'com.android.databinding:compiler:3.1.4'
+
+    implementation "com.google.mlkit:face-detection:$mlkit_version"
+
+    implementation 'com.github.Yoonit-Labs:android-yoonit-camera:2.6.0'
+
+    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     testImplementation 'junit:junit:4.+'

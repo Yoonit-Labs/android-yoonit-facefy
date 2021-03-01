@@ -7,7 +7,6 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import java.lang.Exception
 
 internal class FacefyController {
 
@@ -28,7 +27,7 @@ internal class FacefyController {
     fun detect(
         inputImage: InputImage,
         onFaceDetected: (FaceDetected) -> Unit,
-        onFaceUndetected: (Exception) -> Unit
+        onMessage: (String) -> Unit
     ) {
         this.detector
                 .process(inputImage)
@@ -72,9 +71,15 @@ internal class FacefyController {
                                 face.boundingBox
                             )
                         )
+
+                        return@addOnSuccessListener
                     }
+
+                    onMessage("FACE_UNDETECTED")
             }
-            .addOnFailureListener { e -> onFaceUndetected(e) }
+            .addOnFailureListener { e ->
+                e.message?.let { message -> onMessage(message) }
+            }
             .addOnCompleteListener { detector.close() }
     }
 }
