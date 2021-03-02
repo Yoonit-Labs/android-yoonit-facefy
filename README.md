@@ -4,20 +4,81 @@
 
 A Android library to provide:
 - [Standart Google ML Kit](https://developers.google.com/ml-kit)
-- Face detection (With Min & Max size)
-- Face contours detection
-- Face expression detection
+- Face detection
+- Face contours
+- Face expressions
+- Face movement
+
+## Install
+  
+Add the JitPack repository to your root `build.gradle` at the end of repositories  
+
+```groovy  
+allprojects {
+	repositories {  
+	... 
+	maven { url 'https://jitpack.io' }
+	} 
+}  
+```  
+
+Add the dependency  
+
+```groovy  
+dependencies {
+	implementation 'com.github.Yoonit-Labs:android-yoonit-facefy:master-SNAPSHOT'
+}
+```  
+
+## Usage
+
+This is a basic usage to the `FacefyYoonit`.
+Feel free to use the demo.
+
+```kotlin
+import ai.cyberlabs.yoonit.facefy.Facefy
+
+...
+
+    fun example(inputImage: InputImage) {
+        Facefy()
+            .detect(
+                inputImage,
+                { faceDetected ->
+                    val boudingBox: Rect = faceDetected.boundingBox
+                    val contours: MutableList<PointF> = faceDetected.contours
+                    val headEulerAngleX: Float = faceDetected.headEulerAngleX
+                    val headEulerAngleY: Float = faceDetected.headEulerAngleY
+                    val headEulerAngleZ: Float = faceDetected.headEulerAngleZ
+                    val leftEyeOpenProbability: Float? = faceDetected.leftEyeOpenProbability
+                    val rightEyeOpenProbability: Float? = faceDetected.rightEyeOpenProbability
+                    val smilingProbability: Float? = faceDetected.smilingProbability
+                },
+                { message ->
+                    val mesage: String = message
+                }
+            )
+    }
+```
 
 ## API
 
 ### Methods
 
-| Function                     | Parameters                                                  | Valid values  | Return Type | Description
-| -                            | -                                                           | -             | -           | -
-| detect                       | `image: InputImage, onFaceDetected: (DetectedFace) -> Unit` | -             | void        | Start face detection from from image
-| setFaceClassification        | `enabled: Boolean`                                          | -             | void        | Set face classification enabled/disabled.
-| setFaceContours              | `enabled: Boolean`                                          | -             | void        | Set face contours detection enabled/disabled.
-| setFaceBoundingBox           | `enabled: Boolean`                                          | -             | void        | Set face bounding box detection enabled/disabled.                                                                                                                      | Must have started detect. Emit the detected face bounding box.
+| Function | Parameters                                                                                                                                                                                               | Return Type | Description |
+| -              | -                                                                                                                                                                                                                | -                   | -                 |
+| detect     |  `image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit` | void   | Detect a face from image and return the result in the [`FaceDetected`](#facedetected) as a closure. |
+
+### FaceDetected
+
+| Attribute               | Type                | Description                                                                                    |
+| -                       | -                   | -                                                                                              |
+| leftEyeOpenProbability  | Float?              | The left eye open probability.                                                                 |
+| rightEyeOpenProbability | Float?              | The right eye open probability.                                                                |
+| smilingProbability      | Float?              | The smilling probability.                                                                      |
+| headEulerAngleY         | Float               | The angle that points the "left-right" head direction. See [HeadEulerAngleY](#headeulerangley) |
+| contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                               |
+| boundingBox             | Rect                | The face bounding box.                                                                         |
 
 #### Euler Angle Y Detectable Landmarks
 
