@@ -82,7 +82,7 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 | contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                               |
 | boundingBox             | Rect                | The face bounding box.                                                                         |
 
-#### Euler Angle Y Detectable Landmarks
+#### HeadEulerAngleY
 
 Landmarks are points of interest within a face regarding the Euler Angle Y 
 
