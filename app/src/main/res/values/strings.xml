@@ -3,5 +3,7 @@
     <string name="left_eye_open_label">Left eye open: %1$s</string>
     <string name="right_eye_open_label">Right eye open: %1$s</string>
     <string name="smiling_probability_label">Smiling: %1$s</string>
-    <string name="face_movement">Left-Right Movement: %1$s</string>
+    <string name="horizontal_movement">Horizontal Movement: %1$s</string>
+    <string name="vertical_movement">Vertical Movement: %1$s</string>
+    <string name="tilt_movement">Tilt Movement: %1$s</string>
 </resources>

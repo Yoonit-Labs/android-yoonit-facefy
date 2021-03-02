@@ -41,14 +41,34 @@
         app:layout_constraintTop_toBottomOf="@+id/right_eye_open_probability" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/face_movement"
+        android:id="@+id/horizontal_movement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="@string/face_movement"
+        android:text="@string/horizontal_movement"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/smiling_probability" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/vertical_movement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/vertical_movement"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_movement" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tilt_movement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tilt_movement"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vertical_movement" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_preview"

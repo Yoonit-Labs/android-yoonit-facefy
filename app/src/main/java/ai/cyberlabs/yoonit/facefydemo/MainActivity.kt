@@ -89,33 +89,63 @@ class MainActivity : AppCompatActivity() {
                     inputImage,
                     { faceDetected ->
                         faceDetected.leftEyeOpenProbability?.let {leftEyeOpenProbability ->
+                            if (leftEyeOpenProbability > 0.8) {
+                                left_eye_open_probability.text =
+                                    getString(
+                                        R.string.left_eye_open_label,
+                                        "Open"
+                                    )
+                                return@let
+                            }
                             left_eye_open_probability.text =
                                 getString(
                                     R.string.left_eye_open_label,
-                                    leftEyeOpenProbability.times(100).toString()
+                                    "Close"
                                 )
                         }
                         faceDetected.rightEyeOpenProbability?.let {rightEyeOpenProbability ->
+                            if (rightEyeOpenProbability > 0.8) {
+                                right_eye_open_probability.text =
+                                    getString(
+                                        R.string.right_eye_open_label,
+                                        "Open"
+                                    )
+                                return@let
+                            }
                             right_eye_open_probability.text =
                                 getString(
                                     R.string.right_eye_open_label,
-                                    rightEyeOpenProbability.times(100).toString()
+                                    "Close"
                                 )
                         }
                         faceDetected.smilingProbability?.let {smilingProbability ->
+                            if (smilingProbability > 0.8) {
+                                smiling_probability.text =
+                                    getString(
+                                        R.string.smiling_probability_label,
+                                        "Smiling"
+                                    )
+                                return@let
+                            }
                             smiling_probability.text =
                                 getString(
                                     R.string.smiling_probability_label,
-                                    smilingProbability.times(100).toString()
+                                    "Not Smiling"
                                 )
                         }
 
-                        setFaceMovement(faceDetected.headEulerAngleY)
+                        setFaceHorizontalMovement(faceDetected.headEulerAngleY)
+                        setFaceVerticalMovement(faceDetected.headEulerAngleX)
+                        setFaceTiltMovement(faceDetected.headEulerAngleZ)
 
                         val boundingBox = faceDetected.boundingBox
                         val bitmap = BitmapFactory.decodeFile(imagePath)
 
-                        if ((boundingBox.left + boundingBox.width()) <= bitmap.width) {
+                        if (
+                            (boundingBox.left + boundingBox.width()) <= bitmap.width &&
+                            (boundingBox.top + boundingBox.height()) <= bitmap.height &&
+                            boundingBox.left >= 0
+                        ) {
                             setPreviewImage(bitmap, faceDetected.boundingBox)
                         }
                     },
@@ -167,40 +197,120 @@ class MainActivity : AppCompatActivity() {
         image_preview.setImageBitmap(croppedBitmap)
     }
 
-    private fun setFaceMovement(headAngleY: Float) {
+    private fun setFaceHorizontalMovement(headAngleY: Float) {
         when {
             headAngleY < -36 -> {
-                face_movement.text =
+                horizontal_movement.text =
                     getString(
-                        R.string.face_movement,
+                        R.string.horizontal_movement,
                         "Super Left"
                     )
             }
             headAngleY > -36 && headAngleY < -12 -> {
-                face_movement.text =
+                horizontal_movement.text =
                     getString(
-                        R.string.face_movement,
+                        R.string.horizontal_movement,
                         "Left"
                     )
             }
             headAngleY > -12 && headAngleY < 12 -> {
-                face_movement.text =
+                horizontal_movement.text =
                     getString(
-                        R.string.face_movement,
+                        R.string.horizontal_movement,
                         "Frontal"
                     )
             }
             headAngleY > 12 && headAngleY < 36 -> {
-                face_movement.text =
+                horizontal_movement.text =
                     getString(
-                        R.string.face_movement,
+                        R.string.horizontal_movement,
                         "Right"
                     )
             }
             headAngleY > 36 -> {
-                face_movement.text =
+                horizontal_movement.text =
                     getString(
-                        R.string.face_movement,
+                        R.string.horizontal_movement,
+                        "Super Right"
+                    )
+            }
+        }
+    }
+
+   private fun setFaceVerticalMovement(headAngleX: Float) {
+        when {
+            headAngleX < -36 -> {
+                vertical_movement.text =
+                    getString(
+                        R.string.vertical_movement,
+                        "Super Down"
+                    )
+            }
+            headAngleX > -36 && headAngleX < -12 -> {
+                vertical_movement.text =
+                    getString(
+                        R.string.vertical_movement,
+                        "Down"
+                    )
+            }
+            headAngleX > -12 && headAngleX < 12 -> {
+                vertical_movement.text =
+                    getString(
+                        R.string.vertical_movement,
+                        "Frontal"
+                    )
+            }
+            headAngleX > 12 && headAngleX < 36 -> {
+                vertical_movement.text =
+                    getString(
+                        R.string.vertical_movement,
+                        "Up"
+                    )
+            }
+            headAngleX > 36 -> {
+                vertical_movement.text =
+                    getString(
+                        R.string.vertical_movement,
+                        "Super Up"
+                    )
+            }
+        }
+    }
+
+    private fun setFaceTiltMovement(headAngleZ: Float) {
+        when {
+            headAngleZ < -36 -> {
+                tilt_movement.text =
+                    getString(
+                        R.string.tilt_movement,
+                        "Super Left"
+                    )
+            }
+            headAngleZ > -36 && headAngleZ < -12 -> {
+                tilt_movement.text =
+                    getString(
+                        R.string.tilt_movement,
+                        "Left"
+                    )
+            }
+            headAngleZ > -12 && headAngleZ < 12 -> {
+                tilt_movement.text =
+                    getString(
+                        R.string.tilt_movement,
+                        "Frontal"
+                    )
+            }
+            headAngleZ > 12 && headAngleZ < 36 -> {
+                tilt_movement.text =
+                    getString(
+                        R.string.tilt_movement,
+                        "Right"
+                    )
+            }
+            headAngleZ > 36 -> {
+                tilt_movement.text =
+                    getString(
+                        R.string.tilt_movement,
                         "Super Right"
                     )
             }
