@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
                 Facefy().detect(
                     inputImage,
-                    {faceDetected ->
+                    { faceDetected ->
                         faceDetected.leftEyeOpenProbability?.let {leftEyeOpenProbability ->
                             left_eye_open_probability.text =
                                 getString(
@@ -112,7 +112,12 @@ class MainActivity : AppCompatActivity() {
 
                         setFaceMovement(faceDetected.headEulerAngleY)
 
-                        setPreviewImage(BitmapFactory.decodeFile(imagePath), faceDetected.boundingBox)
+                        val boundingBox = faceDetected.boundingBox
+                        val bitmap = BitmapFactory.decodeFile(imagePath)
+
+                        if ((boundingBox.left + boundingBox.width()) <= bitmap.width) {
+                            setPreviewImage(bitmap, faceDetected.boundingBox)
+                        }
                     },
                     { message -> Log.d(TAG, message) }
                 )

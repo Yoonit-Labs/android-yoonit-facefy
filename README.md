@@ -76,7 +76,9 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 | leftEyeOpenProbability  | Float?              | The left eye open probability.                                                                 |
 | rightEyeOpenProbability | Float?              | The right eye open probability.                                                                |
 | smilingProbability      | Float?              | The smilling probability.                                                                      |
+| headEulerAngleX         | Float               | The angle that points the rotation of the face about the horizontal axis of the image          |
 | headEulerAngleY         | Float               | The angle that points the "left-right" head direction. See [HeadEulerAngleY](#headeulerangley) |
+| headEulerAngleZ         | Float               | The angle that points the rotation of the face about the axis pointing out of the image        |
 | contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                               |
 | boundingBox             | Rect                | The face bounding box.                                                                         |
 
