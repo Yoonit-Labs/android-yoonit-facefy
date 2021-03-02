@@ -1,33 +1,39 @@
+/**
+ * +-+-+-+-+-+-+
+ * |y|o|o|n|i|t|
+ * +-+-+-+-+-+-+
+ *
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * | Yoonit Face lib for Android applications                        |
+ * | Victor Goulart & Haroldo Teruya @ Cyberlabs AI 2020             |
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ */
+
+
 package ai.cyberlabs.yoonit.facefy
 
 import ai.cyberlabs.yoonit.facefy.model.FaceDetected
-import ai.cyberlabs.yoonit.facefy.model.FacefyOptions
 import com.google.mlkit.vision.common.InputImage
-import java.lang.Exception
 
-class Facefy {
+/**
+ * The main Facefy class.
+ * This class represents the input layer.
+ */
+open class Facefy {
 
+    // Facefy controller instance.
     private val facefyController = FacefyController()
 
-    var classification: Boolean = FacefyOptions.classification
-        set(value) {
-            FacefyOptions.classification = value
-            field = value
-        }
-
-    var contours: Boolean = FacefyOptions.contours
-        set(value) {
-            FacefyOptions.contours = value
-            field = value
-        }
-
-    var boundingBox: Boolean = FacefyOptions.boundingBox
-        set(value) {
-            FacefyOptions.boundingBox = value
-            field = value
-        }
-
-    fun detect(image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onFaceUndetected: (Exception) -> Unit) {
-        facefyController.detect(image, onFaceDetected, onFaceUndetected)
+    /**
+     * @param image The source image input to detect the face image.
+     * @param onFaceDetected The success closure for face detected.
+     * @param onMessage The message closure used to notify some states of the face detection.
+     */
+    fun detect(
+            image: InputImage,
+            onFaceDetected: (FaceDetected) -> Unit,
+            onMessage: (String) -> Unit
+    ) {
+        this.facefyController.detect(image, onFaceDetected, onMessage)
     }
 }
