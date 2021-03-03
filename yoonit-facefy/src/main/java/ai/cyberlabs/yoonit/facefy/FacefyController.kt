@@ -38,7 +38,8 @@ internal class FacefyController {
     fun detect(
         inputImage: InputImage,
         onFaceDetected: (FaceDetected) -> Unit,
-        onMessage: (String) -> Unit
+        onMessage: (String) -> Unit,
+        onComplete: () -> Unit
     ) {
         this.detector
                 .process(inputImage)
@@ -79,6 +80,9 @@ internal class FacefyController {
             .addOnFailureListener { e ->
                 e.message?.let { message -> onMessage(message) }
             }
-            .addOnCompleteListener { detector.close() }
+            .addOnCompleteListener {
+                detector.close()
+                onComplete()
+            }
     }
 }
