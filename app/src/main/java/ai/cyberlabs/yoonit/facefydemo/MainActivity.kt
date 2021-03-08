@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var cameraView: CameraView
 
+    private var facefy: Facefy = Facefy()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -85,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             imageBitmap?.let { imageBitmap ->
                 val inputImage = InputImage.fromBitmap(imageBitmap, 0)
 
-                Facefy().detect(
+                facefy.detect(
                     inputImage,
                     { faceDetected ->
                         faceDetected.leftEyeOpenProbability?.let {leftEyeOpenProbability ->
@@ -149,7 +151,8 @@ class MainActivity : AppCompatActivity() {
                             setPreviewImage(bitmap, faceDetected.boundingBox)
                         }
                     },
-                    { message -> Log.d(TAG, message) }
+                    { message -> Log.d(TAG, message) },
+                    { Log.d(TAG, "onComplete") }
                 )
             }
         }

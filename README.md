@@ -67,7 +67,7 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 
 | Function | Parameters                                                                                                                                                                                               | Return Type | Description |
 | -              | -                                                                                                                                                                                                                | -                   | -                 |
-| detect     |  `image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit` | void   | Detect a face from image and return the result in the [`FaceDetected`](#facedetected) as a closure. |
+| detect         |  `image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit` | void   | Detect a face from image and return the result in the [`FaceDetected`](#facedetected) as a closure. |
 
 ### FaceDetected
 
@@ -82,17 +82,15 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 | contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                               |
 | boundingBox             | Rect                | The face bounding box.                                                                         |
 
-#### HeadEulerAngleY
+#### Head Movements
 
-Landmarks are points of interest within a face regarding the Euler Angle Y 
+Here we explaining the above gif and how reached the "results". Each "movement" (vertical, horizontal and tilt) is a state, based in the angle in degrees that indicate head direction;
 
-| Euler Angle Y                     | Detectable landmarks                                      
-| -                                 | -                                              
-| < -36 degrees                     | left eye, left mouth, left ear, nose base, left cheek                             
-| -36 degrees to -12 degrees        | left mouth, nose base, bottom mouth, right eye, left eye, left cheek, left ear tip                  
-| -12 degrees to 12 degrees         | right eye, left eye, nose base, left cheek, right cheek, left mouth, right mouth, bottom mouth          
-| 12 degrees to 36 degrees          | right mouth, nose base, bottom mouth, left eye, right eye, right cheek, right ear tip             
-| > 36 degrees                      | right eye, right mouth, right ear, nose base, right cheek       
+| Head Direction | Attribute         |  _v_ < -36°           | -36° < _v_ < -12° | -12° < _v_ < 12° | 12° < _v_ < 36° |  36° < _v_    | 
+| -              | -                 | -                     | -                 | -                | -               | -             |
+| Vertical       | `headEulerAngleX` | Super Down            | Down              | Frontal          | Up              | Super Up      |            
+| Horizontal     | `headEulerAngleY` | Super Right           | Right             | Frontal          | Left            | Super Left    |           
+| Tilt           | `headEulerAngleZ` | Super Left            | Left              | Frontal          | Right           | Super Right   |
 
 #### Contours
 
@@ -102,7 +100,13 @@ Contours is a list of Points that represents the shape of the recognized face
 
 Clone the repo, change what you want and send PR.
 
+For commit messages we use <a href="https://www.conventionalcommits.org/">Conventional Commits</a>.
+
 Contributions are always welcome!
+
+<a href="https://github.com/Yoonit-Labs/android-yoonit-facefy/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Yoonit-Labs/android-yoonit-facefy" />
+</a>
 
 ---
 
