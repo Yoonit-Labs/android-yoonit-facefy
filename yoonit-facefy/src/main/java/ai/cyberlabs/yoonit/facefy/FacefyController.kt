@@ -24,7 +24,9 @@ import com.google.mlkit.vision.face.FaceDetectorOptions
  */
 internal class FacefyController {
 
-    private val faceCoordinatesController = FaceCoordinatesController()
+    private val faceCoordinatesController: FaceCoordinatesController = FaceCoordinatesController()
+
+    private var isFaceUndetected: Boolean = false
 
     private val faceDetectorOptions =
             FaceDetectorOptions
@@ -52,6 +54,8 @@ internal class FacefyController {
 
                 closestFace?.let { face ->
 
+                    this.isFaceUndetected = false
+
                     val faceContours = mutableListOf<PointF>()
                     face.allContours.forEach {faceContour ->
                         faceContour.points.forEach { pointF ->
@@ -73,7 +77,11 @@ internal class FacefyController {
                     )
                     return@addOnSuccessListener
                 }
-                onMessage("FACE_UNDETECTED")
+
+                if (!this.isFaceUndetected) {
+                    onMessage("FACE_UNDETECTED")
+                    this.isFaceUndetected = true
+                }
             }
             .addOnFailureListener { e ->
                 e.message?.let { message -> onMessage(message) }
