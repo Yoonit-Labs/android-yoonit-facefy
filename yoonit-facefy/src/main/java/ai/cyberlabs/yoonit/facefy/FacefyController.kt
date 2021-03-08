@@ -54,6 +54,8 @@ internal class FacefyController {
 
                 closestFace?.let { face ->
 
+                    this.isFaceUndetected = false
+
                     val faceContours = mutableListOf<PointF>()
                     face.allContours.forEach {faceContour ->
                         faceContour.points.forEach { pointF ->
@@ -76,9 +78,9 @@ internal class FacefyController {
                     return@addOnSuccessListener
                 }
 
-                if (!isFaceUndetected) {
+                if (!this.isFaceUndetected) {
                     onMessage("FACE_UNDETECTED")
-                    isFaceUndetected = true
+                    this.isFaceUndetected = true
                 }
             }
             .addOnFailureListener { e ->
