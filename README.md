@@ -2,14 +2,26 @@
 
 # android-yoonit-facefy
 
-A Android library to provide:
-- [Standart Google ML Kit](https://developers.google.com/ml-kit)
-- Face detection
-- Face contours
-- Face expressions
-- Face movement
+A Android plugin to provide:
+* [Google MLKit](https://developers.google.com/ml-kit) integration
+* [PyTorch](https://pytorch.org/mobile/home/) integration (Soon)
+* Computer vision pipeline (Soon)
+* Face detection
+* Face contours
+* Face expressions
+* Face movement
 
-## Install
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [API](#api)
+  * [Methods](#methods)
+  * [FaceDetected](#facedetected)
+    * [Head Movements](#head-movements)
+* [To contribute and make it better](#to-contribute-and-make-it-better)
+
+## Installation
   
 Add the JitPack repository to your root `build.gradle` at the end of repositories  
 
@@ -45,7 +57,7 @@ import ai.cyberlabs.yoonit.facefy.Facefy
             .detect(
                 inputImage,
                 { faceDetected ->
-                    val boudingBox: Rect = faceDetected.boundingBox
+                    val boundingBox: Rect = faceDetected.boundingBox
                     val contours: MutableList<PointF> = faceDetected.contours
                     val headEulerAngleX: Float = faceDetected.headEulerAngleX
                     val headEulerAngleY: Float = faceDetected.headEulerAngleY
@@ -55,7 +67,10 @@ import ai.cyberlabs.yoonit.facefy.Facefy
                     val smilingProbability: Float? = faceDetected.smilingProbability
                 },
                 { message ->
-                    val mesage: String = message
+                    val message: String = message
+                },
+                {
+                    // Process completed.
                 }
             )
     }
@@ -65,9 +80,9 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 
 ### Methods
 
-| Function | Parameters                                                                                                                                                                                               | Return Type | Description |
-| -              | -                                                                                                                                                                                                                | -                   | -                 |
-| detect     |  `image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit` | void   | Detect a face from image and return the result in the [`FaceDetected`](#facedetected) as a closure. |
+| Function | Parameters                                                                                                        | Return Type | Description                                                                                         |
+| -        | -                                                                                                                 | -           | -                                                                                                   |
+| detect   |  `image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit, onComplete: () -> Unit` | void        | Detect a face from image and return the result in the [`FaceDetected`](#facedetected) as a closure. |
 
 ### FaceDetected
 
@@ -75,34 +90,34 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 | -                       | -                   | -                                                                                              |
 | leftEyeOpenProbability  | Float?              | The left eye open probability.                                                                 |
 | rightEyeOpenProbability | Float?              | The right eye open probability.                                                                |
-| smilingProbability      | Float?              | The smilling probability.                                                                      |
+| smilingProbability      | Float?              | The smiling probability.                                                                       |
 | headEulerAngleX         | Float               | The angle that points the rotation of the face about the horizontal axis of the image          |
 | headEulerAngleY         | Float               | The angle that points the "left-right" head direction. See [HeadEulerAngleY](#headeulerangley) |
 | headEulerAngleZ         | Float               | The angle that points the rotation of the face about the axis pointing out of the image        |
 | contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                               |
 | boundingBox             | Rect                | The face bounding box.                                                                         |
 
-#### HeadEulerAngleY
+#### Head Movements
 
-Landmarks are points of interest within a face regarding the Euler Angle Y 
+Here we explaining the above gif and how reached the "results". Each "movement" (vertical, horizontal and tilt) is a state, based in the angle in degrees that indicate head direction;
 
-| Euler Angle Y                     | Detectable landmarks                                      
-| -                                 | -                                              
-| < -36 degrees                     | left eye, left mouth, left ear, nose base, left cheek                             
-| -36 degrees to -12 degrees        | left mouth, nose base, bottom mouth, right eye, left eye, left cheek, left ear tip                  
-| -12 degrees to 12 degrees         | right eye, left eye, nose base, left cheek, right cheek, left mouth, right mouth, bottom mouth          
-| 12 degrees to 36 degrees          | right mouth, nose base, bottom mouth, left eye, right eye, right cheek, right ear tip             
-| > 36 degrees                      | right eye, right mouth, right ear, nose base, right cheek       
-
-#### Contours
-
-Contours is a list of Points that represents the shape of the recognized face       
+| Head Direction | Attribute         |  _v_ < -36°           | -36° < _v_ < -12° | -12° < _v_ < 12° | 12° < _v_ < 36° |  36° < _v_    | 
+| -              | -                 | -                     | -                 | -                | -               | -             |
+| Vertical       | `headEulerAngleX` | Super Down            | Down              | Frontal          | Up              | Super Up      |            
+| Horizontal     | `headEulerAngleY` | Super Right           | Right             | Frontal          | Left            | Super Left    |           
+| Tilt           | `headEulerAngleZ` | Super Left            | Left              | Frontal          | Right           | Super Right   |
 
 ## To contribute and make it better
 
 Clone the repo, change what you want and send PR.
 
+For commit messages we use <a href="https://www.conventionalcommits.org/">Conventional Commits</a>.
+
 Contributions are always welcome!
+
+<a href="https://github.com/Yoonit-Labs/android-yoonit-facefy/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Yoonit-Labs/android-yoonit-facefy" />
+</a>
 
 ---
 
