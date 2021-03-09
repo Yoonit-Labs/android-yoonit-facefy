@@ -84,12 +84,10 @@ class MainActivity : AppCompatActivity() {
 
             val imageBitmap = BitmapFactory.decodeFile(imagePath)
 
-            imageBitmap?.let { imageBitmap ->
-                val inputImage = InputImage.fromBitmap(imageBitmap, 0)
-
-                facefy.detect(
-                    inputImage,
-                    { faceDetected ->
+            facefy.detect(
+                imageBitmap,
+                { faceDetected ->
+                    faceDetected?.let { faceDetected ->
                         faceDetected.leftEyeOpenProbability?.let {leftEyeOpenProbability ->
                             if (leftEyeOpenProbability > 0.8) {
                                 left_eye_open_probability.text =
@@ -150,11 +148,14 @@ class MainActivity : AppCompatActivity() {
                         ) {
                             setPreviewImage(bitmap, faceDetected.boundingBox)
                         }
-                    },
-                    { message -> Log.d(TAG, message) },
-                    { Log.d(TAG, "onComplete") }
-                )
-            }
+                        return@let
+                    }
+
+                    onFaceUndetected()
+                },
+                { errorMessage -> Log.d(TAG, errorMessage) },
+                { Log.d(TAG, "onComplete") }
+            )
         }
 
         override fun onFaceDetected(x: Int, y: Int, width: Int, height: Int) {

@@ -13,6 +13,7 @@
 package ai.cyberlabs.yoonit.facefy
 
 import ai.cyberlabs.yoonit.facefy.model.FaceDetected
+import android.graphics.Bitmap
 import android.graphics.PointF
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
@@ -24,9 +25,7 @@ import com.google.mlkit.vision.face.FaceDetectorOptions
  */
 internal class FacefyController {
 
-    private val faceCoordinatesController: FaceCoordinatesController = FaceCoordinatesController()
-
-    private var isFaceUndetected: Boolean = false
+    private val faceCoordinatesController = FaceCoordinatesController()
 
     private val faceDetectorOptions =
             FaceDetectorOptions
@@ -36,12 +35,14 @@ internal class FacefyController {
                     .build()
 
     fun detect(
-        inputImage: InputImage,
-        onFaceDetected: (FaceDetected) -> Unit,
-        onMessage: (String) -> Unit,
+        inputBitmap: Bitmap,
+        onSuccess: (FaceDetected?) -> Unit,
+        onError: (String) -> Unit,
         onComplete: () -> Unit
     ) {
         val detector = FaceDetection.getClient(faceDetectorOptions)
+
+        val inputImage = InputImage.fromBitmap(inputBitmap,0)
 
         detector
             .process(inputImage)
@@ -54,8 +55,6 @@ internal class FacefyController {
 
                 closestFace?.let { face ->
 
-                    this.isFaceUndetected = false
-
                     val faceContours = mutableListOf<PointF>()
                     face.allContours.forEach {faceContour ->
                         faceContour.points.forEach { pointF ->
@@ -63,7 +62,7 @@ internal class FacefyController {
                         }
                     }
 
-                    onFaceDetected(
+                    onSuccess(
                         FaceDetected(
                             face.leftEyeOpenProbability,
                             face.rightEyeOpenProbability,
@@ -78,13 +77,10 @@ internal class FacefyController {
                     return@addOnSuccessListener
                 }
 
-                if (!this.isFaceUndetected) {
-                    onMessage("FACE_UNDETECTED")
-                    this.isFaceUndetected = true
-                }
+                onSuccess(null)
             }
             .addOnFailureListener { e ->
-                e.message?.let { message -> onMessage(message) }
+                e.message?.let { errorMessage -> onError(errorMessage) }
             }
             .addOnCompleteListener {
                 detector.close()

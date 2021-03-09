@@ -52,10 +52,10 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 
 ...
 
-    fun example(inputImage: InputImage) {
+    fun example(inputBitmap: Bitmap) {
         Facefy()
             .detect(
-                inputImage,
+                inputBitmap,
                 { faceDetected ->
                     val boundingBox: Rect = faceDetected.boundingBox
                     val contours: MutableList<PointF> = faceDetected.contours
@@ -66,12 +66,12 @@ import ai.cyberlabs.yoonit.facefy.Facefy
                     val rightEyeOpenProbability: Float? = faceDetected.rightEyeOpenProbability
                     val smilingProbability: Float? = faceDetected.smilingProbability
                 },
-                { message ->
-                    val message: String = message
+                { errorMessage ->
+                    val mesage: String = errorMessage
                 },
                 {
                     // Process completed.
-                }
+                }       
             )
     }
 ```
@@ -80,22 +80,22 @@ import ai.cyberlabs.yoonit.facefy.Facefy
 
 ### Methods
 
-| Function | Parameters                                                                                                        | Return Type | Description                                                                                         |
-| -        | -                                                                                                                 | -           | -                                                                                                   |
-| detect   |  `image: InputImage, onFaceDetected: (FaceDetected) -> Unit, onMessage: (String) -> Unit, onComplete: () -> Unit` | void        | Detect a face from image and return the result in the [`FaceDetected`](#facedetected) as a closure. |
+| Function | Parameters                                                                          | Return Type | Description                                                                                          |
+| -        | -                                                                                   | -           | -                                                                                                    |
+| detect   | `inputBitmap: Bitmap, onSuccess: (FaceDetected) -> Unit, onError: (String) -> Unit` | void        | Detect a face from bitmap and return the result in the [`FaceDetected`](#facedetected) as a closure. |
 
 ### FaceDetected
 
-| Attribute               | Type                | Description                                                                                    |
-| -                       | -                   | -                                                                                              |
-| leftEyeOpenProbability  | Float?              | The left eye open probability.                                                                 |
-| rightEyeOpenProbability | Float?              | The right eye open probability.                                                                |
-| smilingProbability      | Float?              | The smiling probability.                                                                       |
-| headEulerAngleX         | Float               | The angle that points the rotation of the face about the horizontal axis of the image          |
-| headEulerAngleY         | Float               | The angle that points the "left-right" head direction. See [HeadEulerAngleY](#headeulerangley) |
-| headEulerAngleZ         | Float               | The angle that points the rotation of the face about the axis pointing out of the image        |
-| contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                               |
-| boundingBox             | Rect                | The face bounding box.                                                                         |
+| Attribute               | Type                | Description                                                                                                               |
+| -                       | -                   | -                                                                                                                         |
+| leftEyeOpenProbability  | Float?              | The left eye open probability.                                                                                            |
+| rightEyeOpenProbability | Float?              | The right eye open probability.                                                                                           |
+| smilingProbability      | Float?              | The smiling probability.                                                                                                  |
+| headEulerAngleX         | Float               | The angle that points the rotation of the face about the horizontal axis of the image. [HeadMovements](#head-movements)   |
+| headEulerAngleY         | Float               | The angle that points the "left-right" head direction. See [HeadMovements](#head-movements)                               |
+| headEulerAngleZ         | Float               | The angle that points the rotation of the face about the axis pointing out of the image. [HeadMovements](#head-movements) |
+| contours                | Mutablelist<PointF> | List of Points that represents the shape of the recognized face.                                                          |
+| boundingBox             | Rect                | The face bounding box.                                                                                                    |
 
 #### Head Movements
 
