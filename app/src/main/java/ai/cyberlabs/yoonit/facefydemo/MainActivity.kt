@@ -287,14 +287,14 @@ class MainActivity : AppCompatActivity() {
                 tilt_movement.text =
                     getString(
                         R.string.tilt_movement,
-                        "Super Left"
+                        "Super Right"
                     )
             }
             headAngleZ > -36 && headAngleZ < -12 -> {
                 tilt_movement.text =
                     getString(
                         R.string.tilt_movement,
-                        "Left"
+                        "Right"
                     )
             }
             headAngleZ > -12 && headAngleZ < 12 -> {
@@ -308,14 +308,14 @@ class MainActivity : AppCompatActivity() {
                 tilt_movement.text =
                     getString(
                         R.string.tilt_movement,
-                        "Right"
+                        "Left"
                     )
             }
             headAngleZ > 36 -> {
                 tilt_movement.text =
                     getString(
                         R.string.tilt_movement,
-                        "Super Right"
+                        "Super Left"
                     )
             }
         }
