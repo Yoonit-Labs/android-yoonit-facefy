@@ -15,8 +15,8 @@ class FaceCoordinatesControllerTest {
     }
 
     private val smallRect: Rect = mock {
-        on { width() } doReturn 300
-        on { height() } doReturn 300
+        on { width() } doReturn 100
+        on { height() } doReturn 100
     }
 
     private val biggestFace: Face = mock {
