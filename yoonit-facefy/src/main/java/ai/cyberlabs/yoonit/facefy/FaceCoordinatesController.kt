@@ -47,7 +47,9 @@ internal class FaceCoordinatesController {
             closestFace!!.boundingBox.width(),
             closestFace!!.boundingBox.height()
         )
-        closestFace!!.boundingBox.set(closestFace!!.boundingBox.resize(size, size))
+        closestFace?.let {
+            it.boundingBox.set(it.boundingBox.resize(size, size))
+        }
 
         return closestFace
     }
