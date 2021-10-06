@@ -1,12 +1,17 @@
 /**
- * +-+-+-+-+-+-+
- * |y|o|o|n|i|t|
- * +-+-+-+-+-+-+
+ * ██╗   ██╗ ██████╗  ██████╗ ███╗   ██╗██╗████████╗
+ * ╚██╗ ██╔╝██╔═══██╗██╔═══██╗████╗  ██║██║╚══██╔══╝
+ *  ╚████╔╝ ██║   ██║██║   ██║██╔██╗ ██║██║   ██║
+ *   ╚██╔╝  ██║   ██║██║   ██║██║╚██╗██║██║   ██║
+ *    ██║   ╚██████╔╝╚██████╔╝██║ ╚████║██║   ██║
+ *    ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝   ╚═╝
  *
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- * | Yoonit Facefy lib for Android applications                      |
- * | Victor Goulart & Haroldo Teruya @ Cyberlabs AI 2021             |
- * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * https://yoonit.dev - about@yoonit.dev
+ *
+ * Yoonit Facefy
+ * The face detection's module for Android with a lot of awesome features
+ *
+ * Haroldo Teruya & Victor Goulart @ 2020-2021
  */
 
 package ai.cyberlabs.yoonit.facefydemo
