@@ -5,13 +5,26 @@
 	<img src="https://img.shields.io/github/license/Yoonit-Labs/android-yoonit-facefy?color=lightgrey&style=for-the-badge"/>
 </p>
 
-* [Google MLKit](https://developers.google.com/ml-kit) integration
-* [PyTorch](https://pytorch.org/mobile/home/) integration (Soon)
-* Computer vision pipeline (Soon)
-* Face detection
-* Face contours
-* Face expressions
-* Face movement
+<div align="center">
+	<table>
+		<tbody>
+			<tr>
+				<td align="left" valign="middle">
+					<p>◻ <a href="https://developers.google.com/ml-kit">Google MLKit</a> integration</p>
+					<p>◻ <a href="https://pytorch.org/mobile/home">PyTorch</a> integration</p>
+					<p>◻ Computer vision pipeline</p>
+					<p>◻ Face detection</p>
+					<p>◻ Face contours</p>
+					<p>◻ Face expressions</p>
+					<p>◻ Face movement</p>
+				</td>
+				<td align="center" valign="middle">
+					<img src="https://raw.githubusercontent.com/Yoonit-Labs/android-yoonit-facefy/main/facefy.gif" width="300" />
+				</td>
+			</tr>
+		<tbody>
+	</table>
+</div>
 
 <div align="center">
 	<h3>Sponsors</h3>
